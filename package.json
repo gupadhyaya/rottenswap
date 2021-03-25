@@ -1,0 +1,23 @@
+{
+  "name": "rottonswap",
+  "version": "1.0.0",
+  "description": "rottonswap on harmony",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gupadhyaya/rottonswap.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gupadhyaya/rottonswap/issues"
+  },
+  "homepage": "https://github.com/gupadhyaya/rottonswap#readme",
+  "dependencies": {
+    "@openzeppelin/contracts": "=3.3.0"
+  }
+}
