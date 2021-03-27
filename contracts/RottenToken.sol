@@ -1,14 +1,14 @@
 // File: contracts/RottenToken.sol
 
-pragma solidity ^0.6.2;
+pragma solidity 0.5.17;
 
-import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20Detailed.sol";
 import "./MaggotToken.sol";
-import "./MinterRole.sol";
+import "@openzeppelin/contracts/access/roles/MinterRole.sol";
 
 // SushiToken with Governance.
-contract RottenToken is ERC20("RottenToken", "ROT"), Ownable, MinterRole {
+contract RottenToken is ERC20, ERC20Detailed("RottenToken", "ROT", 18), MinterRole {
     // START OF ROTTEN SUSHI SPECIFIC CODE
     // rotten sushi is an exact copy of sushi except for the
     // following code, which implements a "rot" every transfer
@@ -30,10 +30,14 @@ contract RottenToken is ERC20("RottenToken", "ROT"), Ownable, MinterRole {
         maggotDivisor = _maggotDivisor;
     }
 
+    function name() public view returns (string memory) {
+        return "RottonToken";
+    }
+
     function transfer(address recipient, uint256 amount)
         public
-        virtual
-        override
+        // virtual
+        // override
         returns (bool)
     {
         // maggot amount is 1%
@@ -50,7 +54,7 @@ contract RottenToken is ERC20("RottenToken", "ROT"), Ownable, MinterRole {
         address sender,
         address recipient,
         uint256 amount
-    ) public virtual override returns (bool) {
+    ) public returns (bool) {
         // maggot amount is 1%
         uint256 maggotAmount = amount.div(maggotDivisor);
         // recipient receives 1% maggot tokens
@@ -64,9 +68,14 @@ contract RottenToken is ERC20("RottenToken", "ROT"), Ownable, MinterRole {
     // END OF ROTTEN SUSHI SPECIFIC CODE
 
     /// @notice Creates `_amount` token to `_to`. Must only be called by the owner (ZombieChef).
-    function mint(address _to, uint256 _amount) public onlyMinter {
+    function mint(address _to, uint256 _amount)
+        public
+        onlyMinter
+        returns (bool)
+    {
         _mint(_to, _amount);
         _moveDelegates(address(0), _delegates[_to], _amount);
+        return true;
     }
 
     // Copied and modified from YAM code:

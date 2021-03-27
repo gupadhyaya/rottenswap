@@ -1,11 +1,12 @@
 // File: contracts/MaggotToken.sol
 
-pragma solidity ^0.6.2;
+pragma solidity 0.5.17;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20Detailed.sol";
+import "@openzeppelin/contracts/ownership/Ownable.sol";
 
-contract MaggotToken is ERC20("MaggotToken", "MAGGOT"), Ownable {
+contract MaggotToken is ERC20, ERC20Detailed("MaggotToken", "MAGGOT", 18), Ownable {
     using SafeMath for uint256;
     address res;
 

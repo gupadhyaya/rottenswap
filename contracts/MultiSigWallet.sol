@@ -1,4 +1,4 @@
-pragma solidity ^0.6.2;
+pragma solidity 0.5.17;
 
 /// @title Multisignature wallet - Allows multiple parties to agree on transactions before execution.
 /// @author Stefan George - <stefan.george@consensys.net>
@@ -93,12 +93,8 @@ contract MultiSigWallet {
     }
 
     /// @dev Fallback function allows to deposit ether.
-    fallback() external payable {
+    function() external payable {
         if (msg.value > 0) emit Deposit(msg.sender, msg.value);
-    }
-
-    receive() external payable {
-        // if (msg.value > 0) emit Deposit(msg.sender, msg.value);
     }
 
     /*
@@ -142,7 +138,7 @@ contract MultiSigWallet {
                 owners[i] = owners[owners.length - 1];
                 break;
             }
-        // owners.length -= 1;
+        owners.length -= 1;
         if (required > owners.length) changeRequirement(owners.length);
         emit OwnerRemoval(owner);
     }
@@ -182,7 +178,7 @@ contract MultiSigWallet {
     /// @param destination Transaction target address.
     /// @param value Transaction ether value.
     /// @param data Transaction data payload.
-    /// @return transactionId Returns transaction ID.
+    /// @return Returns transaction ID.
     function submitTransaction(
         address destination,
         uint256 value,
@@ -256,7 +252,7 @@ contract MultiSigWallet {
             let x := mload(0x40) // "Allocate" memory for output (0x40 is where "free memory" pointer is stored by convention)
             let d := add(data, 32) // First 32 bytes are the padded length of data, so exclude that
             result := call(
-                sub(gas(), 34710), // 34710 is the value that solidity is currently emitting
+                sub(gas, 34710), // 34710 is the value that solidity is currently emitting
                 // It includes callGas (700) + callVeryLow (3, to pay for SUB) + callValueTransferGas (9000) +
                 // callNewAccountGas (25000, in case the destination address does not exist and needs creating)
                 destination,
@@ -288,7 +284,7 @@ contract MultiSigWallet {
     /// @param destination Transaction target address.
     /// @param value Transaction ether value.
     /// @param data Transaction data payload.
-    /// @return transactionId Returns transaction ID.
+    /// @return Returns transaction ID.
     function addTransaction(
         address destination,
         uint256 value,
@@ -310,7 +306,7 @@ contract MultiSigWallet {
      */
     /// @dev Returns number of confirmations of a transaction.
     /// @param transactionId Transaction ID.
-    /// @return count Number of confirmations.
+    /// @return Number of confirmations.
     function getConfirmationCount(uint256 transactionId)
         public
         view
@@ -323,7 +319,7 @@ contract MultiSigWallet {
     /// @dev Returns total number of transactions after filers are applied.
     /// @param pending Include pending transactions.
     /// @param executed Include executed transactions.
-    /// @return count Total number of transactions after filters are applied.
+    /// @return Total number of transactions after filters are applied.
     function getTransactionCount(bool pending, bool executed)
         public
         view
@@ -337,14 +333,14 @@ contract MultiSigWallet {
     }
 
     /// @dev Returns list of owners.
-    /// @return memory List of owner addresses.
+    /// @return List of owner addresses.
     function getOwners() public view returns (address[] memory) {
         return owners;
     }
 
     /// @dev Returns array with owner addresses, which confirmed transaction.
     /// @param transactionId Transaction ID.
-    /// @return _confirmations Returns array of owner addresses.
+    /// @return Returns array of owner addresses.
     function getConfirmations(uint256 transactionId)
         public
         view
@@ -367,7 +363,7 @@ contract MultiSigWallet {
     /// @param to Index end position of transaction array.
     /// @param pending Include pending transactions.
     /// @param executed Include executed transactions.
-    /// @return _transactionIds Returns array of transaction IDs.
+    /// @return Returns array of transaction IDs.
     function getTransactionIds(
         uint256 from,
         uint256 to,

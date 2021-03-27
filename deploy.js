@@ -114,7 +114,7 @@ async function addHarmonyBridgeAsMinterToRotten() {
   console.log(response);
   return response;
 }
-addHarmonyBridgeAsMinterToRotten().then(()=>{});
+// addHarmonyBridgeAsMinterToRotten().then(()=>{});
 
 async function renounceMinterForOwner() {
   const contractJson = require("./build/contracts/RottenToken.json");
@@ -131,3 +131,19 @@ async function renounceMinterForOwner() {
   // console.log(await contract.methods.isMinter(process.env.MULTISIG).call());
 }
 // renounceMinterForOwner().then(()=>{});
+
+async function tryMinting() {
+  const contractJson = require("./build/contracts/RottenToken.json");
+  const contract = new web3.eth.Contract(contractJson.abi, process.env.ROTTEN);
+  // const response = await contract.methods
+  //   .mint(process.env.USER1, web3.utils.toWei("100", "ether"))
+  //   .send({
+  //     from: ethMasterAccount,
+  //     gas: process.env.GAS_LIMIT,
+  //     gasPrice: new BN(await web3.eth.getGasPrice()).mul(new BN(1)),
+  //   });
+  // console.log(response);
+  // return response;
+  console.log(await contract.methods.isMinter(process.env.BRIDGE).call());
+}
+// tryMinting().then(()=>{});
