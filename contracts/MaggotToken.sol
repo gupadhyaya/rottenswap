@@ -2,11 +2,11 @@
 
 pragma solidity 0.5.17;
 
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20Mintable.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20Detailed.sol";
-import "@openzeppelin/contracts/access/roles/MinterRole.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20Burnable.sol";
 
-contract MaggotToken is ERC20, ERC20Detailed("MaggotToken", "1MAGGOT", 18), MinterRole {
+contract MaggotToken is ERC20Mintable, ERC20Detailed("MaggotToken", "1MAGGOT", 18), ERC20Burnable {
     using SafeMath for uint256;
     address res;
 

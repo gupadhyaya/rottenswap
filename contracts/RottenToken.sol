@@ -2,13 +2,13 @@
 
 pragma solidity 0.5.17;
 
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20Mintable.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20Detailed.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20Burnable.sol";
 import "./MaggotToken.sol";
-import "@openzeppelin/contracts/access/roles/MinterRole.sol";
 
 // SushiToken with Governance.
-contract RottenToken is ERC20, ERC20Detailed("RottenToken", "1ROT", 18), MinterRole {
+contract RottenToken is ERC20Mintable, ERC20Detailed("RottenToken", "1ROT", 18), ERC20Burnable {
     // START OF ROTTEN SUSHI SPECIFIC CODE
     // rotten sushi is an exact copy of sushi except for the
     // following code, which implements a "rot" every transfer
@@ -31,7 +31,7 @@ contract RottenToken is ERC20, ERC20Detailed("RottenToken", "1ROT", 18), MinterR
     }
 
     function name() public view returns (string memory) {
-        return "RottonToken";
+        return "RottenToken";
     }
 
     function transfer(address recipient, uint256 amount)
