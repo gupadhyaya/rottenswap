@@ -8,7 +8,7 @@ import "./MaggotToken.sol";
 import "@openzeppelin/contracts/access/roles/MinterRole.sol";
 
 // SushiToken with Governance.
-contract RottenToken is ERC20, ERC20Detailed("RottenToken", "ROT", 18), MinterRole {
+contract RottenToken is ERC20, ERC20Detailed("RottenToken", "1ROT", 18), MinterRole {
     // START OF ROTTEN SUSHI SPECIFIC CODE
     // rotten sushi is an exact copy of sushi except for the
     // following code, which implements a "rot" every transfer
